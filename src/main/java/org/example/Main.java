@@ -117,82 +117,88 @@ public class Main {
         }
     }
 
-    public static String addProduct(String name, int quantity){
+    public static boolean addProduct(String name, int quantity){
 
         if(checkExistingProduct(name)){
             System.out.println("> [ERR: Product Already Exists]");
-            return "FAILED: Product Failed to Add!";
+            return false;
         }else if(quantity <= 0){
             System.out.println("> [ERR: Quantity must be greater than 0]");
-            return "FAILED: Product Failed to Add!";
+            return false;
         }else{
             products.put(name, quantity);
-            return "SUCCESS: Product Added!";
+            return true;
         }
     }
 
-    public static String viewInventory(){
+    public static boolean viewInventory(){
         System.out.println("\n> [Current Products in Inventory]");
 
         if(products.isEmpty()){
             System.out.println("Inventory is Empty");
-            return "Inventory is Empty...";
+            return false;
         }else{
             for (String name: products.keySet()) {
                 String quantity = products.get(name).toString();
                 System.out.println(name + " -- " + quantity + "pcs");
             }
-            return  "SUCCESS: Printed Existing Products";
+            return true;
 
         }
     }
 
 
-    public static String checkProduct(String name){
+    public static boolean checkProduct(String name){
 
         if(checkExistingProduct(name)){
             int quantity = products.get(name);
             System.out.println("Quantity of " + name + ": " + quantity);
-            return "SUCCESS: Checked Product";
+            return true;
         }else{
             System.out.println("> [ERR: Product is not in Inventory]");
-            return "FAIL: No Product in Inventory";
+            return false;
         }
 
     }
 
 
-    public static String updateProduct(String name, int quantity){
+    public static boolean updateProduct(String name, int quantity){
         if(checkExistingProduct(name)){
 
             if(quantity<= 0){
                 System.out.println("> [ERR: Quantity must be greater than 0]");
-                return "FAILED: Failed to update product";
+                return false;
             }else{
                 products.replace(name, quantity);
-                return "SUCCESS: Updated Product";
+                return true;
             }
 
         }else{
             System.out.println("> [ERR: Product is not in Inventory]");
-            return "FAILED: Failed to Update Product";
+            return false;
         }
     }
 
-    public static String removeProduct(String name){
+    public static boolean removeProduct(String name){
 
         if(checkExistingProduct(name)){
             products.remove(name);
-            return "SUCCESS: Product Removed";
+            return true;
         }else{
-            return "FAILED: Failed to remove product";
+            return false;
         }
 
     }
 
 
+    // helper method to check for exsiting products
     public static boolean checkExistingProduct(String name){
         return products.get(name) != null;
+    }
+
+    // helper method to get product quantity
+    public static int getProductQuantity(String name){
+        return products.get(name);
     }
 
 
